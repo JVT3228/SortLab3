@@ -28,6 +28,27 @@ public:
     T& front() const;
     T& back() const;
     bool empty() const;
+
+    class Iterator {
+    private:
+        Element* current;
+
+    public:
+        Iterator(Element* node) : current(node) {}
+
+        T& operator*() { return current->data; }
+
+        Iterator& operator++() {
+            if (current) current = current->next;
+            return *this;
+        }
+
+        bool operator!=(const Iterator& other) const { return current != other.current; }
+        bool operator==(const Iterator& other) const { return current == other.current; }
+    };
+
+    Iterator beginIter() const { return Iterator(begin); }
+    Iterator endIter() const { return Iterator(nullptr); }
 };
 
 #endif
